@@ -4,8 +4,6 @@ import { isUndefined } from "lodash"
 import { debounce, autobind } from "core-decorators"
 import classnames from "classnames"
 
-import { onLoaded } from "api/premiere"
-
 import styles from "./AppComponent.css"
 
 export default class AppComponent extends Component {
@@ -21,7 +19,6 @@ export default class AppComponent extends Component {
   }
 
   componentDidMount() {
-    onLoaded()
     this.props.getProjectChildren()
   }
 

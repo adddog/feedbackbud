@@ -1,10 +1,4 @@
 import { all, call, spawn } from "redux-saga/effects"
-import {
-  pollGetProjectChildren,
-  getProjectChildren,
-  getProjectFileMetadata,
-  openFileInSourceMonitor,
-} from "./premiere"
 
 /*
 https://github.com/redux-saga/redux-saga/issues/760

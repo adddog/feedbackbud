@@ -11,13 +11,6 @@ import { withRouter } from "react-router-dom"
 
 import AppComponent from "components/AppComponent/AppComponent"
 
-import {
-    getProjectChildren,
-    getProjectFileMetadatas,
-} from "actions/premiere"
-
-import { queryChanged } from "actions/query"
-
 const mapStateToProps = () => (state, ownProps) => ({
 })
 
