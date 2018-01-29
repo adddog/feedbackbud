@@ -8,6 +8,7 @@ import {
 import { connect } from "react-redux"
 import { find, omit } from "lodash"
 import { withRouter } from "react-router-dom"
+import { getUser, setUser } from "actions/server"
 
 import AppComponent from "components/AppComponent/AppComponent"
 
@@ -15,6 +16,8 @@ const mapStateToProps = () => (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, props) => ({
+    getUser: ()=>dispatch(getUser()),
+    setUser: ()=>dispatch(setUser()),
 })
 
 export default withRouter(

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux"
 import { createResponsiveStateReducer } from 'redux-responsive';
 import settings from "./settings"
+import server from "./server"
 
 export default combineReducers({
   browser: createResponsiveStateReducer(
@@ -22,4 +23,5 @@ export default combineReducers({
     }
   ),
   settings,
+  server,
 })

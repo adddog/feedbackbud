@@ -23,7 +23,6 @@ module.exports = ctx => {
             require("postcss-color-function")(),
             require("postcss-calc")(),
             require("postcss-icss-keyframes")(),
-            require("postcss-animations")(),
             require("postcss-nested")(),
             require("postcss-easings"),
             require("postcss-timing-function"),

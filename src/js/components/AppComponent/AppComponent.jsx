@@ -5,6 +5,8 @@ import { debounce, autobind } from "core-decorators"
 import classnames from "classnames"
 import styles from "./AppComponent.css"
 
+import PartnerPollComponent from "components/PartnerPollComponent/PartnerPollComponent"
+
 export default class AppComponent extends Component {
   static propTypes = {
   }
@@ -14,6 +16,7 @@ export default class AppComponent extends Component {
   }
 
   componentDidMount() {
+    this.props.getUser()
   }
 
   componentDidUpdate() {}
@@ -21,6 +24,7 @@ export default class AppComponent extends Component {
   render() {
     return (
       <main className={classnames(styles.root)}>
+      <PartnerPollComponent/>
       </main>
     )
   }
