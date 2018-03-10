@@ -6,13 +6,12 @@ import classnames from "classnames"
 
 import styles from "./AppComponent.css"
 
-import WebRTC from "webrtc"
-
 export default class AppComponent extends Component {
-
   static propTypes = {
     //actions
-//    queryChanged: PropTypes.func.isRequired,
+    getProjectChildren: PropTypes.func.isRequired,
+    getProjectFileMetadatas: PropTypes.func.isRequired,
+    queryChanged: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -20,10 +19,15 @@ export default class AppComponent extends Component {
   }
 
   componentDidMount() {
-    this.webrtx = new WebRTC({})
+    this.props.getProjectChildren()
   }
 
   componentDidUpdate() {}
+
+  @autobind
+  _handleChange(v) {
+    this.props.queryChanged(v.target.value)
+  }
 
   render() {
     return (

@@ -15,10 +15,6 @@ const mapStateToProps = () => (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, props) => ({
-    getProjectChildren: () => dispatch(getProjectChildren()),
-    getProjectFileMetadatas: () =>
-        dispatch(getProjectFileMetadatas()),
-    queryChanged: value => dispatch(queryChanged(value)),
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {

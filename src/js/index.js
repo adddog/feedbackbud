@@ -8,6 +8,8 @@ import {
   REQUEST_PREMIERE_CHILDREN
 } from 'actions/actionTypes';
 
+import Detector from 'common/detector';
+import Server from 'server';
 import { logGreen } from 'common/log';
 import { throttle } from 'lodash';
 import React from 'react';
@@ -35,7 +37,10 @@ const store = configureStore({
 const throttleResize = throttle(() => {
   store.dispatch(calculateResponsiveState(window));
 }, 400);
+
 window.addEventListener('resize', () => throttleResize());
+
+const server = new Server(store.dispatch)
 
 ReactDOM.render(
   <Provider store={store}>

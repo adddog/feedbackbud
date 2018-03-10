@@ -7,7 +7,7 @@ const _ = require("lodash")
 const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
+const UglifyJsWebpackPlugin = require("uglifyjs-webpack-plugin")
 const postcssEasings = require("postcss-easings")
 
 module.exports = env => {
@@ -89,17 +89,41 @@ module.exports = env => {
   return {
     entry: {
       app: "./js/index.js",
-      vendor: ["immutable", "lodash", "react", "redux", "redux-saga"],
     },
     node: {
       dns: "mock",
       net: "mock",
     },
+    mode: isDev ? "development" : "production",
     output: {
       filename: "bundle.[name].[hash].js",
       path: resolve(__dirname, constants.DIST),
       publicPath: "",
       pathinfo: !env.prod,
+    },
+    optimization: {
+      minimizer: ifProd([
+        new UglifyJsWebpackPlugin({
+          parallel: true, // uses all cores available on given machine
+          sourceMap: false,
+        }),
+      ]),
+      splitChunks: {
+        cacheGroups: {
+          default: {
+            chunks: "initial",
+            name: "bundle",
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+          vendor: {
+            chunks: "initial",
+            name: "vendor",
+            priority: -10,
+            test: /node_modules\/(.*)\.js/,
+          },
+        },
+      },
     },
     context: constants.SRC_DIR,
     devtool: env.prod ? "source-map" : "eval",
@@ -110,7 +134,7 @@ module.exports = env => {
       },
       contentBase: resolve(__dirname, constants.DIST),
       historyApiFallback: !!env.dev,
-      port: 8081,
+      port: 9966,
     },
     bail: env.prod,
     resolve: {
@@ -127,9 +151,11 @@ module.exports = env => {
         resolve(`${constants.JS_SRC_DIR}`, "routes"),
         resolve(`${constants.JS_SRC_DIR}`, "store"),
         resolve(`${constants.JS_SRC_DIR}`, "selectors"),
+        resolve(`${constants.JS_SRC_DIR}`, "server"),
         resolve(`${constants.JS_SRC_DIR}`, "sagas"),
         resolve(`${constants.JS_SRC_DIR}`, "utils"),
         resolve(`${constants.JS_SRC_DIR}`, "api"),
+        resolve(`${constants.JS_SRC_DIR}`, "webrtc"),
       ],
     },
     node: {
@@ -175,28 +201,7 @@ module.exports = env => {
           quiet: true,
         })
       ),
-      ifProd(
-        isDebug
-          ? undefined
-          : new UglifyJSPlugin({
-              sourceMap: true,
-              uglifyOptions: {
-                compress: true,
-              },
-            })
-      ),
       DefineENV,
-      ifNotTest(
-        new webpack.optimize.CommonsChunkPlugin({
-          name: "vendor",
-        })
-      ),
-      ifNotTest(
-        new webpack.optimize.CommonsChunkPlugin({
-          name: "common",
-          fileName: "bundle.common.js",
-        })
-      ),
       new webpack.LoaderOptionsPlugin({
         context: __dirname,
         options: {
