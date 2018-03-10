@@ -9,7 +9,7 @@ import { connect } from "react-redux"
 import { find, omit } from "lodash"
 import { withRouter } from "react-router-dom"
 
-import AppComponent from "components/AppComponent/AppComponent"
+import FeedComponent from "components/FeedComponent/FeedComponent"
 
 const mapStateToProps = () => (state, ownProps) => ({
     routes: state.routes
@@ -18,19 +18,12 @@ const mapStateToProps = () => (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, props) => ({
 })
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-    return {
-        ...stateProps,
-        ...dispatchProps,
-        ...ownProps,
-    }
-}
 
 export default withRouter(
     compose(
-        setDisplayName("AppComponent"),
+        setDisplayName("FeedComponent"),
         withHandlers({}),
-        connect(mapStateToProps, mapDispatchToProps, mergeProps),
+        connect(mapStateToProps, mapDispatchToProps),
         onlyUpdateForPropTypes
-    )(AppComponent)
+    )(FeedComponent)
 )

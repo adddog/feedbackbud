@@ -45,7 +45,7 @@ module.exports = env => {
                   loader: "css-loader",
                   options: {
                     importLoaders: 1,
-                    modules: true,
+                    modules: false,
                     url: false,
                     localIdentName: "[name]__[local]",
                   },
@@ -64,7 +64,7 @@ module.exports = env => {
               {
                 loader: "css-loader",
                 options: {
-                  modules: true,
+                  modules: false,
                   url: false,
                   localIdentName: "[name]__[local]___[hash:base64:5]",
                   importLoaders: 1,

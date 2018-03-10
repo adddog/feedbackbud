@@ -2,17 +2,15 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { isUndefined } from "lodash"
 import { debounce, autobind } from "core-decorators"
-import classnames from "classnames"
+import { Main } from "UI/UIComponents"
 
-import styles from "./AppComponent.css"
+import InstructionsComponent from "components/Instructions/Instructions"
 
 import WebRTC from "webrtc"
 
 export default class AppComponent extends Component {
-
   static propTypes = {
-    //actions
-//    queryChanged: PropTypes.func.isRequired,
+    routes: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -20,16 +18,16 @@ export default class AppComponent extends Component {
   }
 
   componentDidMount() {
-    this.webrtx = new WebRTC({})
+    // this.webrtx = new WebRTC({})
   }
 
   componentDidUpdate() {}
 
   render() {
     return (
-      <main className={classnames(styles.root)}>
-
-      </main>
+      <Main>
+        <InstructionsComponent />
+      </Main>
     )
   }
 }

@@ -21,24 +21,10 @@ export default class WebRTC {
         localVideoEl: "localVideo",
         remoteVideosEl: "remoteVideos",
         media: {
-          video: store.useWebcam
-            ? Detector.isDesktop
-              ? noCamera ? false : { ...videoSettings }
-              : noCamera
-                ? false
-                : {
-                    ...videoSettings,
-                    facingMode: "environment",
-                  }
-            : false,
-          audio: store.useWebcam ? !Detector.isDesktop : false,
+          video: props.noVideo ? false : { ...videoSettings },
+          audio: !props.noAudio,
         },
-        receiveMedia: {
-          offerToReceiveAudio: true,
-          offerToReceiveVideo: true,
-        },
-        offerToReceiveAudio: true,
-        offerToReceiveVideo: true,
+        receiveMedia: props.receiveMedia,
       },
       { mirror: false }
     )

@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import '../css/vars/fonts.css';
 window.Modernizr = window.Modernizr || {}
 import './index.css';
 import 'whatwg-fetch';
@@ -18,18 +17,17 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import { createBrowserHistory, createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 
-import { syncHistoryWithStore } from 'react-router-redux';
 import { calculateResponsiveState } from 'redux-responsive';
 
 import configureStore from 'store/configureStore';
-import configureRoutes from 'routes/configureRoutes';
-
+import configureRoutes from 'routes';
 import { Router } from 'react-router-dom';
 
 const browserHistory = createBrowserHistory();
+
 const store = configureStore({
   browserHistory
 });
