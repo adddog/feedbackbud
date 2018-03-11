@@ -13,8 +13,7 @@ class Socket {
   set socket(s) {
     this._socket = s
 
-    this._socket.on("connect", id => {
-    })
+    this._socket.on("connect", id => {})
 
     this._socket.on("handshake", roomId => {
       this.emitter.emit("set:roomId", roomId)
@@ -25,6 +24,10 @@ class Socket {
     })
 
     this._socket.on("disconnect", () => {})
+
+    setInterval(() => {
+      this.emit("ping")
+    }, 3000)
   }
 
   set emiter(e) {
@@ -63,8 +66,8 @@ class Socket {
     })
   }
 
-  shareThumbnail(data){
-    console.log(data);
+  shareThumbnail(data) {
+    console.log(data)
     this.emit("room:thumbnail", data)
   }
 }

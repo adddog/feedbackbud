@@ -16,6 +16,7 @@ import WebRTC from "webrtc"
 
 class WebRTCComponent extends Component {
   static propTypes = {
+    roomId: PropTypes.string.isRequired,
     webRTCProps: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
   }
@@ -33,8 +34,16 @@ class WebRTCComponent extends Component {
   render() {
     return (
       <Main>
-        <div id="localVideo" />
-        <div id="remoteVideo" />
+        <video
+          className="u-full video--local"
+          id={this.props.webRTCProps.elementIds.localVideo}
+          playsInline
+          autoPlay
+        />
+        <div id={this.props.webRTCProps.elementIds.remoteVideo} />
+        <div className="u-canvas-container">
+          <canvas className="canvas" id={this.props.webRTCProps.elementIds.outputCanvas} />
+        </div>
       </Main>
     )
   }
@@ -42,7 +51,7 @@ class WebRTCComponent extends Component {
 
 const mapStateToProps = () => (state, ownProps) => ({
   isStarted: state.app.get("instructions").started,
-  webRTCProps: getWebRTCProps(state),
+  webRTCProps: getWebRTCProps(state, ownProps),
 })
 
 const mapDispatchToProps = (dispatch, props) => ({})

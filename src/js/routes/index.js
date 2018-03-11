@@ -10,7 +10,7 @@ export const ROUTES = {
   },
   feed: {
     base: '/feed',
-    slug: '/feed'
+    slug: '/feed/:roomId'
   },
 };
 export default function configureRoutes() {

@@ -5,13 +5,17 @@ import { Map } from "immutable"
 const initialState = new Map()
   .set("settings", {
     serverUrl: SERVER_URL,
+    localVideoEl:'localVideo',
+    remoteVideosEl:'remoteVideo',
     width: 640,
     height: 480,
     frameRate: 480,
     noVideo: false,
-    noAudio: false,
+    noAudio: true,
+    autoRemoveVideos: true,
+    autoRequestMedia: true,
     receiveMedia: {
-      offerToReceiveAudio: true,
+      offerToReceiveAudio: false,
       offerToReceiveVideo: true,
     },
   })

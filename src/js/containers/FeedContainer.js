@@ -12,7 +12,7 @@ import { withRouter } from "react-router-dom"
 import FeedComponent from "components/FeedComponent/FeedComponent"
 
 const mapStateToProps = () => (state, ownProps) => ({
-    routes: state.routes
+    routes: state.routes,
 })
 
 const mapDispatchToProps = (dispatch, props) => ({

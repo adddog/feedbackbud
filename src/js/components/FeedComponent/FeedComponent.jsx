@@ -9,11 +9,13 @@ import {
 } from "recompose"
 import { composeElement, Section, Bb } from "UI/UIComponents"
 
+import { getRoomIdFromMatchParams } from "selectors/routes"
 import { Main } from "UI/UIComponents"
 import WebRTCComponent from "components/WebRTCComponent/WebRTCComponent"
 
 class FeedComponent extends Component {
   static propTypes = {
+    roomId: PropTypes.string.isRequired,
     router: PropTypes.object.isRequired,
   }
 
@@ -29,7 +31,7 @@ class FeedComponent extends Component {
   render() {
     return (
       <Main>
-        <WebRTCComponent />
+        <WebRTCComponent roomId={this.props.roomId} />
       </Main>
     )
   }
@@ -37,6 +39,7 @@ class FeedComponent extends Component {
 
 const mapStateToProps = () => (state, ownProps) => ({
   router: state.router,
+  roomId: getRoomIdFromMatchParams(state, ownProps),
 })
 
 const mapDispatchToProps = (dispatch, props) => ({})

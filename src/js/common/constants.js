@@ -1,21 +1,12 @@
 import QS from "query-string"
+import { cover, contain } from "intrinsic-scale"
 import Detector from "common/detector"
 import { map } from "lodash"
 
 let _msgTo
 export const postErrMsg = str => {
-  clearTimeout(_msgTo)
-  Gui.errorMsg = str
-  _msgTo = setTimeout(function() {
-    Gui.errorMsg = ""
-  }, 1500)
 }
 export const postMsg = str => {
-  clearTimeout(_msgTo)
-  Gui.infoMsg = str
-  _msgTo = setTimeout(function() {
-    Gui.infoMsg = ""
-  }, 1500)
 }
 
 export const videoSettings = {
@@ -111,3 +102,48 @@ export const resizeCanvas = (el, w = WIDTH, h = HEIGHT) => {
   el.style.top = `${y / 2}px`
   el.style.left = `${x / 2}px`
 }
+
+
+const RED = [
+  "background: #f45f42",
+  "border: 1px solid #662558",
+  "color: #3d3735",
+  "display: block",
+  "line-height: 30px",
+  "text-align: center",
+  "font-weight: bold",
+].join(";")
+const GREEN = [
+  "background: #662558",
+  "border: 1px solid #662558",
+  "color: #42f4aa",
+  "display: block",
+  "line-height: 30px",
+  "text-align: center",
+  "font-weight: bold",
+].join(";")
+const BLOCK = [
+  "background: #571402",
+  "border: 1px solid #3E0E02",
+  "color: white",
+  "display: block",
+  "text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3)",
+  "box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset",
+  "line-height: 30px",
+  "text-align: center",
+  "font-weight: bold",
+].join(";")
+const BLOCK_INFO = [
+  "background: #4285f4",
+  "text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7)",
+  "color: #fbbc05",
+  "display: block",
+  "line-height: 23px",
+  "text-align: center",
+  "font-weight: bold",
+].join(";")
+
+export const logError = str => console.log(`%c ${str}`, RED)
+export const logSuccess = str => console.log(`%c ${str}`, GREEN)
+export const logInfoB = str => console.log(`%c ${str}`, BLOCK)
+export const logInfo = str => console.log(`%c ${str}`, BLOCK_INFO)

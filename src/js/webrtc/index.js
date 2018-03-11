@@ -1,14 +1,15 @@
 import io from "socket.io-client"
-import Emitter from "common/emitter"
-import { SERVER_URL, IS_DEV,IS_PROD } from "common/constants"
-import Socket from "server/socket"
 import SimpleWebRTC from "simplewebrtc"
-
+import Emitter from "common/emitter"
+import { SERVER_URL, IS_DEV, IS_PROD } from "common/constants"
+import { connect, disconnect } from "webrtc/model"
+import Socket from "server/socket"
+import Desktop from "webrtc/desktop"
 
 export default class WebRTC {
   constructor(props) {
-
-    if(IS_DEV){
+    this.props = props
+    if (IS_DEV) {
       Socket.socket = io(SERVER_URL)
     }
     Socket.emitter = Emitter
@@ -27,30 +28,32 @@ export default class WebRTC {
         nick: {
           uuid: settings.uuid,
         },
-        autoRemoveVideos: true,
-        autoRequestMedia: true,
-        localVideoEl: "localVideo",
-        remoteVideosEl: "remoteVideos",
+        ...settings,
         media: {
           video: settings.noVideo ? false : { ...videoSettings },
           audio: !settings.noAudio,
         },
-        receiveMedia: settings.receiveMedia,
       },
       { mirror: false }
     )
 
-    this.webrtc.on("connectionReady", function(evt) {
+    this.webrtc.on("connectionReady", evt => {
       if (IS_PROD) {
         Socket.socket = webrtc.connection.connection
       }
     })
 
-    this.webrtc.on("disconnect", function(evt) {})
+    //this.webrtc.on("disconnect", evt => {})
 
-    this.webrtc.on("readyToCall", function() {})
-
+    this.webrtc.on("readyToCall", () => {
+      Socket.createRoom({ roomId })
+      this.webrtc.joinRoom(roomId)
+      this.start()
+    })
+    /*
     this.webrtc.on("createdPeer", peer => {})
+
+    this.webrtc.on("handlePeerStreamAdded", peer => {})
 
     this.webrtc.on("leftRoom", roomId => {
       console.log(roomId)
@@ -60,12 +63,14 @@ export default class WebRTC {
 
     this.webrtc.on("videoRemoved", (videoEl, peer) => {})
 
-    this.webrtc.on("videoAdded", function(video, peer) {
-      console.log(video)
+    this.webrtc.on("localScreenAdded", el => {
+      console.log(el)
     })
+    this.webrtc.on("videoAdded", (video, peer) => {})*/
+  }
 
-    Socket.createRoom({roomId})
-
-    this.webrtc.joinRoom(roomId)
+  start() {
+    this.desktop = new Desktop(this.webrtc, this.props, Emitter)
+    connect()
   }
 }

@@ -17,6 +17,7 @@ const Button = composeElement(["flex"], "button")
 
 class InstructionsComponent extends Component {
   static propTypes = {
+    roomSlug: PropTypes.string.isRequired,
     isStarted: PropTypes.bool.isRequired,
     setInstructions: PropTypes.func.isRequired,
   }
@@ -33,7 +34,7 @@ class InstructionsComponent extends Component {
     if (this.props.isStarted) return null
     return (
       <Section centerBoth="true">
-        <Link to={`${ROUTES.feed.base}`}>
+        <Link to={`${ROUTES.feed.base}/${this.props.roomSlug}`}>
           <Button
             onClick={() =>
               this.props.setInstructions({ started: true })

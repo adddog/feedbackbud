@@ -22,7 +22,7 @@ const WebRTC = options => {
       },
       autoRemoveVideos: true,
       autoRequestMedia: true,
-      localVideoEl: "localVideo",
+      localVideoId: "localVideo",
       remoteVideosEl: "remoteVideos",
       media: {
         video: store.useWebcam
