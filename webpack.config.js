@@ -98,7 +98,7 @@ module.exports = env => {
     output: {
       filename: "bundle.[name].[hash].js",
       path: resolve(__dirname, constants.DIST),
-      publicPath: "",
+      publicPath: "/",
       pathinfo: !env.prod,
     },
     optimization: {

@@ -7,10 +7,28 @@ import {
   onlyUpdateForPropTypes,
   withHandlers,
 } from "recompose"
-import { composeElement, Section, Bb } from "UI/UIComponents"
+import styled from "styled-components"
+import { composeElement } from "UI/UIComponents"
 import { Main } from "UI/UIComponents"
 
 import { getWebRTCProps } from "selectors/webrtc"
+
+export const CanvasContainer = composeElement(
+  ["abs", "abs--tl", "full"],
+  "div"
+)
+
+export const Canvas = styled.canvas`
+    backface-visibility: hidden
+    perspective: 1
+    transform-origin: 0% 0%
+    transform: scale3d(1,1,1)
+`
+
+export const VideoEl = composeElement(
+  ["abs", "abs--tl", "full"],
+  "video"
+)
 
 import WebRTC from "webrtc"
 
@@ -34,16 +52,17 @@ class WebRTCComponent extends Component {
   render() {
     return (
       <Main>
-        <video
-          className="u-full video--local"
+        <VideoEl
           id={this.props.webRTCProps.elementIds.localVideo}
           playsInline
           autoPlay
         />
         <div id={this.props.webRTCProps.elementIds.remoteVideo} />
-        <div className="u-canvas-container">
-          <canvas className="canvas" id={this.props.webRTCProps.elementIds.outputCanvas} />
-        </div>
+        <CanvasContainer>
+          <Canvas
+            id={this.props.webRTCProps.elementIds.outputCanvas}
+          />
+        </CanvasContainer>
       </Main>
     )
   }

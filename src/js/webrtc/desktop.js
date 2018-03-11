@@ -52,7 +52,6 @@ import {
 } from "common/constants"
 
 const Desktop = (webrtc, state, emitter) => {
-  if (IS_MOBILE) return
 
   const peers = new Set()
   const peerIds = new Map()
@@ -723,7 +722,6 @@ const Desktop = (webrtc, state, emitter) => {
       console.log(peer.stream);
       console.log(peer.stream.getAudioTracks());
       console.log(peer.stream.getVideoTracks());
-      //toggleMediaStream(true)
       setTimeout(() => {
         setRemoteDesktopStream(peer.videoEl)
       }, FUDGE_VIDEO_DELAY)
@@ -752,8 +750,7 @@ const Desktop = (webrtc, state, emitter) => {
     tryStarting(peers.values())
   })
 
-  window.addEventListener("resize", () => resizeCanvas(WIDTH, HEIGHT))
-
+  window.addEventListener("resize", () => resizeCanvas(canvasEl, WIDTH, HEIGHT))
   resizeCanvas(canvasEl, WIDTH, HEIGHT)
 
   //*************

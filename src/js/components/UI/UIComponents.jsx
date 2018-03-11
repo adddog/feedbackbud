@@ -6,6 +6,15 @@ const MODS = {
   position: relative;
   display: flex;`,
 
+  abs: `
+  position: absolute;
+  `,
+
+  'abs--tl': `
+  top:0;
+  left:0;
+  `,
+
   full: `
   width: 100%;
   height: 100%;
@@ -38,3 +47,4 @@ export const Section = styled.section`
   ${props => (props.centerBoth ? MODS.centerBoth : "")};
   ${MODS.full};
 `
+
