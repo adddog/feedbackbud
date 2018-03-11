@@ -22,7 +22,6 @@ class FeedComponent extends Component {
   }
 
   componentDidMount() {
-    // this.webrtx = new WebRTC(this.props.webrtc)
   }
 
   componentDidUpdate() {}

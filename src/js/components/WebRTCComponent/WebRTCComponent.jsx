@@ -10,10 +10,13 @@ import {
 import { composeElement, Section, Bb } from "UI/UIComponents"
 import { Main } from "UI/UIComponents"
 
+import { getWebRTCProps } from "selectors/webrtc"
+
 import WebRTC from "webrtc"
 
 class WebRTCComponent extends Component {
   static propTypes = {
+    webRTCProps: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
   }
 
@@ -22,7 +25,7 @@ class WebRTCComponent extends Component {
   }
 
   componentDidMount() {
-    // this.webrtx = new WebRTC(this.props.webrtc)
+    this.webrtc = new WebRTC(this.props.webRTCProps)
   }
 
   componentDidUpdate() {}
@@ -30,7 +33,6 @@ class WebRTCComponent extends Component {
   render() {
     return (
       <Main>
-      <span>HERER</span>
         <div id="localVideo" />
         <div id="remoteVideo" />
       </Main>
@@ -40,7 +42,7 @@ class WebRTCComponent extends Component {
 
 const mapStateToProps = () => (state, ownProps) => ({
   isStarted: state.app.get("instructions").started,
-  webrtc: state.webrtc,
+  webRTCProps: getWebRTCProps(state),
 })
 
 const mapDispatchToProps = (dispatch, props) => ({})

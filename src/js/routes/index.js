@@ -1,7 +1,6 @@
 import React from 'react';
 import AppContainer from 'containers/AppContainer';
 import FeedContainer from 'containers/FeedContainer';
-import WebRTCComponent from "components/WebRTC/WebRTC"
 
 import { Route, Switch, Redirect } from 'react-router';
 
@@ -24,7 +23,7 @@ export default function configureRoutes() {
       />
       <Route
         path={`${ROUTES.feed.slug}`}
-        component={WebRTCComponent}
+        component={FeedContainer}
       />
     </Switch>
   );
