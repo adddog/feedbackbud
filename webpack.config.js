@@ -8,7 +8,6 @@ const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const UglifyJsWebpackPlugin = require("uglifyjs-webpack-plugin")
-const postcssEasings = require("postcss-easings")
 
 module.exports = env => {
   const isDev = !!env.dev
@@ -26,65 +25,12 @@ module.exports = env => {
   console.log(colors.blue(`isDev: ${isDev}`))
   console.log(colors.blue(`isProd: ${isProd}`))
   console.log("--------------")
+
   const addPlugin = (add, plugin) => (add ? plugin : undefined)
   const ifDev = plugin => addPlugin(env.dev, plugin)
   const ifProd = plugin => addPlugin(env.prod, plugin)
   const ifNotTest = plugin => addPlugin(!env.test, plugin)
   const removeEmpty = array => array.filter(i => !!i)
-
-  const stylesLoaders = () => {
-    const CSS_LOADERS = isProd
-      ? [
-          {
-            test: /\.css$/,
-            exclude: /node_modules/,
-            use: ExtractTextPlugin.extract({
-              fallback: "style-loader",
-              use: [
-                {
-                  loader: "css-loader",
-                  options: {
-                    importLoaders: 1,
-                    modules: false,
-                    url: false,
-                    localIdentName: "[name]__[local]",
-                  },
-                },
-                "postcss-loader",
-              ],
-            }),
-          },
-        ]
-      : [
-          {
-            test: /\.css$/,
-            exclude: /node_modules/,
-            use: [
-              "style-loader",
-              {
-                loader: "css-loader",
-                options: {
-                  modules: false,
-                  url: false,
-                  localIdentName: "[name]__[local]___[hash:base64:5]",
-                  importLoaders: 1,
-                },
-              },
-              {
-                loader: "postcss-loader",
-                options: {
-                  sourceMap: isDev,
-                },
-              },
-            ],
-          },
-        ]
-
-    console.log(colors.yellow(`-- Css Loaders --`))
-    console.log(CSS_LOADERS)
-    console.log(colors.yellow(`--  --`))
-    return CSS_LOADERS
-  }
 
   return {
     entry: {
@@ -153,6 +99,7 @@ module.exports = env => {
         resolve(`${constants.JS_SRC_DIR}`, "selectors"),
         resolve(`${constants.JS_SRC_DIR}`, "server"),
         resolve(`${constants.JS_SRC_DIR}`, "sagas"),
+        resolve(`${constants.JS_SRC_DIR}`, "styles"),
         resolve(`${constants.JS_SRC_DIR}`, "utils"),
         resolve(`${constants.JS_SRC_DIR}`, "api"),
         resolve(`${constants.JS_SRC_DIR}`, "webrtc"),
@@ -171,22 +118,15 @@ module.exports = env => {
             loader: "babel-loader",
           },
         },
-      ].concat(stylesLoaders()),
+      ],
     },
     plugins: removeEmpty([
       ifDev(new webpack.HotModuleReplacementPlugin()),
-      ifDev(
-        new HtmlWebpackPlugin({
-          template: "./index.html",
-        })
-      ),
-      ifProd(
-        new HtmlWebpackPlugin({
-          assetsUrl: `""`,
-          env: process.env,
-          template: "./index.ejs", // Load a custom template (ejs by default see the FAQ for details)
-        })
-      ),
+      new HtmlWebpackPlugin({
+        assetsUrl: `""`,
+        env: process.env,
+        template: "./index.ejs", // Load a custom template (ejs by default see the FAQ for details)
+      }),
       ifProd(
         new ExtractTextPlugin({
           filename: "css/main.css",
@@ -202,19 +142,6 @@ module.exports = env => {
         })
       ),
       DefineENV,
-      new webpack.LoaderOptionsPlugin({
-        context: __dirname,
-        options: {
-          sassLoader: {
-            assetsUrl: `""`,
-            includePaths: [
-              join(constants.CSS_SRC_DIR),
-              join(constants.CSS_SRC_DIR, "vars"),
-              join(constants.CSS_SRC_DIR, "site"),
-            ],
-          },
-        },
-      }),
     ]),
   }
 }

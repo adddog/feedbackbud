@@ -50,6 +50,7 @@ export default class WebRTC {
       this.webrtc.joinRoom(roomId)
       this.start()
     })
+
     /*
     this.webrtc.on("createdPeer", peer => {})
 
