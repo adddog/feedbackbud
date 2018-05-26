@@ -1,48 +1,60 @@
 {
-  "ignore": ["node_modules"],
+  "ignore": [
+    "node_modules"
+  ],
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties",
-    "transform-decorators-legacy"
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
   ],
-  "env":
-  {
-    "development":
-    {
+  "env": {
+    "development": {
       "presets": [
-        ["@babel/preset-env",
-        {
-          "targets":
+        [
+          "@babel/preset-env",
           {
-            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+            "targets": {
+              "browsers": [
+                "> 1%",
+                "last 2 versions",
+                "not ie <= 8"
+              ]
+            }
           }
-        }],
-        ["@babel/preset-react",
-        {
-          "development": true,
-        }],
-      ],
+        ],
+        [
+          "@babel/preset-react",
+          {
+            "development": true
+          }
+        ]
+      ]
     },
-    "production":
-    {
+    "production": {
       "presets": [
-        ["@babel/preset-env",
-        {
-          "targets":
+        [
+          "@babel/preset-env",
           {
-            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+            "targets": {
+              "browsers": [
+                "> 1%",
+                "last 2 versions",
+                "not ie <= 8"
+              ]
+            }
           }
-        }],
-        "@babel/preset-react",
-      ],
+        ],
+        "@babel/preset-react"
+      ]
     },
-    "test":
-    {
+    "test": {
       "plugins": [
-        ["__coverage__",
-        {
-          "ignore": "*.+(test|stub).*"
-        }]
+        [
+          "__coverage__",
+          {
+            "ignore": "*.+(test|stub).*"
+          }
+        ]
       ]
     }
   }

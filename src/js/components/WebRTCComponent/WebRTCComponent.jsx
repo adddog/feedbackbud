@@ -44,7 +44,13 @@ class WebRTCComponent extends Component {
   }
 
   componentDidMount() {
-    this.webrtc = new WebRTC(this.props.webRTCProps)
+    setTimeout(()=>{
+      this.webrtc = new WebRTC(this.props.webRTCProps)
+    },2000)
+  }
+
+  shouldComponentUpdate(){
+    return false
   }
 
   componentDidUpdate() {}

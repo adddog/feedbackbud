@@ -1,4 +1,4 @@
-import "babel-polyfill"
+import "@babel/polyfill"
 window.Modernizr = window.Modernizr || {}
 import "whatwg-fetch"
 import baseStyles from 'styles'
