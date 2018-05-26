@@ -5,6 +5,7 @@ import { SERVER_URL, IS_DEV, IS_PROD } from "common/constants"
 import { connect, disconnect } from "webrtc/model"
 import Socket from "server/socket"
 import Desktop from "webrtc/desktop"
+import Mobile from "webrtc/mobile"
 
 export default class WebRTC {
   constructor(props) {
@@ -71,7 +72,9 @@ export default class WebRTC {
   }
 
   start() {
-    this.desktop = new Desktop(this.webrtc, this.props, Emitter)
+    this.app = Detector.isMobile
+      ? new Mobile(this.webrtc, this.props, Emitter)
+      : new Desktop(this.webrtc, this.props, Emitter)
     connect()
   }
 }

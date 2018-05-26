@@ -16,6 +16,7 @@ const baseStyles = () => injectGlobal`
     width: 100vw;
 }
 
+#app,
 .main{
     position: relative;
     width: 100%;
