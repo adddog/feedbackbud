@@ -1,7 +1,7 @@
-import io from "socket.io-client"
-import SimpleWebRTC from "simplewebrtc"
+// import io from "socket.io-client"
 import Emitter from "common/emitter"
-import { SERVER_URL, IS_DEV, IS_PROD } from "common/constants"
+import { M_INPUT_NEW } from "common/events"
+import { SERVER_URL,MEDIA_TYPES, IS_DEV, IS_PROD } from "common/constants"
 import { connect, disconnect } from "webrtc/model"
 import Socket from "server/socket"
 import Desktop from "webrtc/desktop"
@@ -11,18 +11,24 @@ export default class WebRTC {
   constructor(props) {
     this.props = props
     if (IS_DEV) {
-      Socket.socket = io(SERVER_URL)
+      // Socket.socket = io(SERVER_URL)
     }
     Socket.emitter = Emitter
+    Emitter.on(M_INPUT_NEW, obj => {
+      const {type, files} = obj
+      if(type === MEDIA_TYPES.webcam && !this.webrtc){
+        this.initWebRTC()
+      }
+    })
+  }
 
-    const { settings, roomId } = props
-
+  initWebRTC(){
+    const { settings, roomId } = this.props
     const videoSettings = {
       width: { max: settings.width },
       height: { max: settings.height },
       frameRate: { max: settings.fps },
     }
-
     this.webrtc = new SimpleWebRTC(
       {
         url: settings.serverUrl,

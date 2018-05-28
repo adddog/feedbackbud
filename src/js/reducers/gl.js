@@ -1,18 +1,21 @@
 import * as ACTIONS from "actions/actionTypes";
+import {MEDIA_TYPES,MAX_MEDIA_INPUTS} from "common/constants"
 import CONFIG from "common/config"
 import { Map } from "immutable";
 
 const initialState = new Map()
   .set("settings", {
-    numChannels: 2,
+    maxInputs: MAX_MEDIA_INPUTS,
+    numChannels: 3,
     width: CONFIG.width,
     height: CONFIG.height
   })
   .set("videoInputs", {
-    webcam: {},
-    canvas: {},
-    instagram: {},
-    media: {},
+    [MEDIA_TYPES.webcam]: {},
+    [MEDIA_TYPES.canvas]: {},
+    [MEDIA_TYPES.instagram]: {},
+    [MEDIA_TYPES.media]: {},
+    [MEDIA_TYPES.file]: {},
   });
 
 export default function webrtc(state = initialState, action) {

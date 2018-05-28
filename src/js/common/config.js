@@ -1,41 +1,42 @@
+import { WIDTH, HEIGHT, FPS_I } from "common/constants"
 class CONFIG {
   constructor() {
-    this._width = 640;
-    this._height = 480;
-    this._fps = 18;
+    this._width = WIDTH
+    this._height = HEIGHT
+    this._fps = FPS_I
   }
 
   update(ctx = {}) {
     for (const key in ctx) {
-      if(this[key]){
-        this[key] = ctx[key];
+      if (this[key]) {
+        this[key] = ctx[key]
       }
     }
   }
 
   get width() {
-    return this._width;
+    return this._width
   }
 
   get height() {
-    return this._height;
+    return this._height
   }
 
   get fps() {
-    return this._fps;
+    return this._fps
   }
 
   set width(v) {
-    this._width = v;
+    this._width = v
   }
 
   set height(v) {
-    this._height = v;
+    this._height = v
   }
 
   set fps(v) {
-    this._fps = v;
+    this._fps = v
   }
 }
 
-module.exports = new CONFIG();
+module.exports = new CONFIG()

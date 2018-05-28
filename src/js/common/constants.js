@@ -4,17 +4,14 @@ import Detector from "common/detector"
 import { map } from "lodash"
 
 let _msgTo
-export const postErrMsg = str => {
-}
-export const postMsg = str => {
-}
+export const postErrMsg = str => {}
+export const postMsg = str => {}
 
 export const videoSettings = {
   width: { max: WIDTH },
   height: { max: HEIGHT },
   frameRate: { max: FPS },
 }
-export const RENDERING_KEYS = ["mainVideo", "keyVideo"]
 const parseQs = QS.parse(window.location.search)
 export const USE_AUDIO = !!parseQs.audio
 export const COLOR_P = process.env.NODE_ENV === "production"
@@ -31,8 +28,11 @@ export const IS_DESKTOP = Detector.isDesktop
 export const WIDTH = 640
 export const HEIGHT = 480
 
+export const LOCAL_VIDEO_ID = "localVideo"
+export const REMOTE_VIDEOS_EL_ID = "remoteVideo"
+
 export const MAX_RECORD_TIME = 5000
-export const FPS = QS.parse(location.search).fps || 18
+export const FPS = QS.parse(location.search).fps || 16
 export const FPS_I = 1000 / FPS
 
 export const RECORD_FRAMES_DELAY = 1500
@@ -76,16 +76,34 @@ export const numberDesktops = values => {
   return c
 }
 
+export const createVideo = (width, height) => {
+  const v = document.createElement("video")
+  v.setAttribute("crossorigin", "anonymous")
+  v.setAttribute("autoplay", true)
+  v.width = width
+  v.height = height
+  return v
+}
 export const createVideoElFromStream = (
   stream,
   { width = WIDTH, height = HEIGHT } = {}
 ) => {
-  const v = document.createElement("video")
-  v.setAttribute("autoplay", true)
-  v.width = width
-  v.height = height
+  const v = createVideo(width, height)
   v.srcObject = stream
-  v.classList.add("canvas")
+  return v
+}
+
+export const createVideoElFromFile = (
+  file,
+  { width = WIDTH, height = HEIGHT } = {}
+) => {
+  const v = createVideo(width, height)
+  v.src = URL.createObjectURL(file)
+  return v
+}
+
+export const destroyVideoEl = v => {
+  URL.revokeObjectURL(v.src)
   return v
 }
 
@@ -102,7 +120,6 @@ export const resizeCanvas = (el, w = WIDTH, h = HEIGHT) => {
   el.style.top = `${y / 2}px`
   el.style.left = `${x / 2}px`
 }
-
 
 const RED = [
   "background: #f45f42",
@@ -147,3 +164,14 @@ export const logError = str => console.log(`%c ${str}`, RED)
 export const logSuccess = str => console.log(`%c ${str}`, GREEN)
 export const logInfoB = str => console.log(`%c ${str}`, BLOCK)
 export const logInfo = str => console.log(`%c ${str}`, BLOCK_INFO)
+
+export const MEDIA_TYPES = {
+  webcam: "webcam",
+  canvas: "canvas",
+  instagram: "instagram",
+  media: "media",
+  file: "file",
+}
+
+export const MAX_MEDIA_INPUTS = 3
+export const ALLOWED_TYPES = ["video/mp4"]

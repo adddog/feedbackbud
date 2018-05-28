@@ -1,4 +1,5 @@
-const VERTEX_BUFFER = [[0, 0], [0, 1], [1, 0], [1, 1]];
+const VERTEX_BUFFER = [0, 0, 0, 1, 1, 0, 1, 1];
+import * as Posterize from "./posterize.glsl";
 
 const Double = (regl, props) => {
   return regl({
@@ -17,6 +18,7 @@ const Double = (regl, props) => {
          `,
 
     frag: `
+        ${Posterize.define}
 
           precision lowp float;
           uniform sampler2D tex0;
@@ -24,6 +26,8 @@ const Double = (regl, props) => {
           uniform float tolerance;
           uniform float slope;
             varying vec2 vUv;
+
+            ${Posterize.frag}
 
           float chromaKeyAlphaTwoFloat(vec3 color, vec3 keyColor, float tolerance, float slope)
             {
@@ -50,7 +54,7 @@ const Double = (regl, props) => {
                clamp(tolerance, 0.0001, 1.),
                clamp(slope, 0.001, 1.)
             );
-
+            vid0 = Posterize(vid0);
             vec3 webcamMixedColor = mix(vid0, vid1, webcamKeyColor);
             gl_FragColor = vec4(webcamMixedColor,1);
 
@@ -69,7 +73,7 @@ const Double = (regl, props) => {
     },
     primitive: "triangle strip",
     count: 4,
-  })(props);
+  })
 };
 
 export default Double;

@@ -29,7 +29,7 @@ export const Canvas = styled.canvas`
     transform: scale3d(1,1,1)
 `;
 
-export const VideoEl = composeElement(["abs", "abs--tl"], "video");
+export const VideoEl = composeElement(["abs", "abs--tl"], "video", `display:none;`);
 
 class WebRTCComponent extends Component {
   static propTypes = {
@@ -47,9 +47,9 @@ class WebRTCComponent extends Component {
   componentDidMount() {
     this.webrtc = new WebRTC(this.props.webRTCProps);
     this.gl = GL(this.canvasEl, this.props.webRTCProps.settings);
-    this.gl.createTextures([
+    /*this.gl.model.addSourceEl(
       qs(`#${this.props.webRTCProps.elementIds.localVideo}`),
-    ]);
+    );*/
   }
 
   shouldComponentUpdate() {

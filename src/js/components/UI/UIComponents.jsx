@@ -21,16 +21,21 @@ const MODS = {
   `,
 
   centerBoth: `
-  justify-content:center;
-  align-items:center;
+    justify-content:center;
+    align-items:center;
+  `,
+
+  wrap: `
+    flex-wrap: wrap;
   `,
 };
 
-export const composeElement = (mods, tagName = "div") => {
+export const composeElement = (mods, tagName = "div", props = ``) => {
   return styled[tagName]`
     ${(isArray(mods) ? mods : [mods])
       .map(str => MODS[str] || "")
       .join("")};
+      ${props}
   `;
 };
 
@@ -42,11 +47,20 @@ export const extend = (el, mods = []) => {
   `;
 };
 
+export const Span = styled.span`
+  position: relative;
+`;
+
 export const Main = styled.section`
   position: relative;
   display: flex;
   min-width: 100%;
   ${MODS.full};
+`;
+
+export const Container = styled.section`
+  position: relative;
+  display: flex;
 `;
 
 export const Section = styled.section`

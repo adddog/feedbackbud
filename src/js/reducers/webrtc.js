@@ -1,13 +1,17 @@
 import * as ACTIONS from "actions/actionTypes"
 import CONFIG from "common/config"
-import { SERVER_URL } from "common/constants"
+import {
+  SERVER_URL,
+  LOCAL_VIDEO_ID,
+  REMOTE_VIDEOS_EL_ID,
+} from "common/constants"
 import { Map } from "immutable"
 
 const initialState = new Map()
   .set("settings", {
     serverUrl: SERVER_URL,
-    localVideoEl:'localVideo',
-    remoteVideosEl:'remoteVideo',
+    localVideoEl: LOCAL_VIDEO_ID,
+    remoteVideosEl: REMOTE_VIDEOS_EL_ID,
     width: CONFIG.width,
     height: CONFIG.height,
     frameRate: CONFIG.fps,

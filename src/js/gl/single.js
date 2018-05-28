@@ -46,6 +46,6 @@ const Single = (regl, props) => {
     uniforms: {
       texture: regl.prop("tex0"),
     },
-  })(props);
+  })
 };
 export default Single;
