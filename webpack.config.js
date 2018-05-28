@@ -103,6 +103,7 @@ module.exports = env => {
         resolve(`${constants.JS_SRC_DIR}`, "utils"),
         resolve(`${constants.JS_SRC_DIR}`, "api"),
         resolve(`${constants.JS_SRC_DIR}`, "webrtc"),
+        resolve(`${constants.JS_SRC_DIR}`, "gl"),
       ],
     },
     node: {

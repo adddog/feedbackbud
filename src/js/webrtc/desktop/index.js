@@ -16,14 +16,8 @@ const Desktop = (webrtc, state, emitter) => {
     })
   }
   const remoteVideoDiv = document.getElementById(state.elementIds.remoteVideo)
-  //videoEl.style.display = "none"
+  videoEl.style.display = "none"
   remoteVideoDiv.style.display = "none"
-
-  const canvasEl = document.getElementById(state.elementIds.outputCanvas)
-  canvasEl.width = state.width
-  canvasEl.height = state.height
-
-  const canvasKey = document.createElement("canvas")
 
   webrtc.on("createdPeer", peer => {
     console.log(`Found peer! ${peer.id}`)

@@ -1,43 +1,41 @@
-/***************
-    =============
-    INTERNAL CONFIG
-    =============
-***************/
+class CONFIG {
+  constructor() {
+    this._width = 640;
+    this._height = 480;
+    this._fps = 18;
+  }
 
-import { isNil } from "lodash"
-export const BASE_FONT_PX = 14
+  update(ctx = {}) {
+    for (const key in ctx) {
+      if(this[key]){
+        this[key] = ctx[key];
+      }
+    }
+  }
 
-/********************
-// QUERY RESULTS
-*********************/
-export const MAX_QUERY_RESULTS = 30
-export const TIMECODE_FIELD_WIDTH = 8 * BASE_FONT_PX
-export const QUERY_RESULTS_NUM_FIELDS = 3
+  get width() {
+    return this._width;
+  }
 
-export const getFieldWidths = totalWidth =>
-  totalWidth - TIMECODE_FIELD_WIDTH // [name | timecode | text]
+  get height() {
+    return this._height;
+  }
 
-/********************
-// SIZING
+  get fps() {
+    return this._fps;
+  }
 
+  set width(v) {
+    this._width = v;
+  }
 
-change index.css for CSS font-sizes
+  set height(v) {
+    this._height = v;
+  }
 
-Calcuated from font-size on body (16px)
+  set fps(v) {
+    this._fps = v;
+  }
+}
 
-Pixels  EMs
-13px  0.813em
-14px  0.875em //BASE
-15px  0.938em
-16px  1.000em
-*********************/
-
-
-export const stringLengthToPixelWidth = length =>
-  length * BASE_FONT_PX
-
-export const pixelWidthToStringLength = length =>
-  isNil(length) ? NaN : Math.floor(length / BASE_FONT_PX)
-
-export const approximateNumberWordPadding = textAreaWidth =>
-  Math.floor(textAreaWidth / BASE_FONT_PX / 5)
+module.exports = new CONFIG();

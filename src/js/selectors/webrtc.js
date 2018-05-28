@@ -1,5 +1,5 @@
-export const getRoomSlug = state => state.webrtc.get("room").id
-export const getRoomId = state => state.webrtc.get("room").id
+export const getRoomSlug = state => state.webrtc.get("room").id;
+export const getRoomId = state => state.webrtc.get("room").id;
 
 export const getWebRTCProps = (state, ownProps = {}) => ({
   /**~~~~**
@@ -16,4 +16,9 @@ export const getWebRTCProps = (state, ownProps = {}) => ({
     id: ownProps.roomId || getRoomId(state),
   },
   roomId: ownProps.roomId || getRoomId(state),
-})
+});
+
+export const getDimentions = (state, ownProps = {}) => ({
+  width: state.webrtc.get("settings").width,
+  height: state.webrtc.get("settings").height,
+});

@@ -4,6 +4,7 @@ import app from "./app"
 import routes from "./routes"
 import settings from "./settings"
 import webrtc from "./webrtc"
+import gl from "./gl"
 
 export default combineReducers({
   browser: createResponsiveStateReducer(
@@ -28,4 +29,5 @@ export default combineReducers({
   app,
   settings,
   webrtc,
+  gl,
 })

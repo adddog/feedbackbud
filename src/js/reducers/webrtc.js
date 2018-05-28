@@ -1,4 +1,5 @@
 import * as ACTIONS from "actions/actionTypes"
+import CONFIG from "common/config"
 import { SERVER_URL } from "common/constants"
 import { Map } from "immutable"
 
@@ -7,9 +8,9 @@ const initialState = new Map()
     serverUrl: SERVER_URL,
     localVideoEl:'localVideo',
     remoteVideosEl:'remoteVideo',
-    width: 640,
-    height: 480,
-    frameRate: 480,
+    width: CONFIG.width,
+    height: CONFIG.height,
+    frameRate: CONFIG.fps,
     noVideo: false,
     noAudio: true,
     autoRemoveVideos: true,
