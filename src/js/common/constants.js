@@ -20,7 +20,8 @@ export const IS_STAGE = process.env.NODE_ENV === "stage"
 export const IS_DEV = process.env.NODE_ENV === "development"
 
 export const SERVER_URL = IS_DEV
-  ? "https://rad.ngrok.io/"
+  //? "https://rad.ngrok.io/"
+  ? "https://localhost:4455/"
   : "https://rad.wtf/"
 
 export const IS_MOBILE = !Detector.isDesktop
@@ -28,11 +29,12 @@ export const IS_DESKTOP = Detector.isDesktop
 export const WIDTH = 640
 export const HEIGHT = 480
 
+export const CANVAS_OUTPUT_ID = "c_output"
 export const LOCAL_VIDEO_ID = "localVideo"
 export const REMOTE_VIDEOS_EL_ID = "remoteVideo"
 
 export const MAX_RECORD_TIME = 5000
-export const FPS = QS.parse(location.search).fps || 16
+export const FPS = QS.parse(location.search).fps || 12
 export const FPS_I = 1000 / FPS
 
 export const RECORD_FRAMES_DELAY = 1500
@@ -74,37 +76,6 @@ export const numberDesktops = values => {
     if (val.desktop) c++
   }
   return c
-}
-
-export const createVideo = (width, height) => {
-  const v = document.createElement("video")
-  v.setAttribute("crossorigin", "anonymous")
-  v.setAttribute("autoplay", true)
-  v.width = width
-  v.height = height
-  return v
-}
-export const createVideoElFromStream = (
-  stream,
-  { width = WIDTH, height = HEIGHT } = {}
-) => {
-  const v = createVideo(width, height)
-  v.srcObject = stream
-  return v
-}
-
-export const createVideoElFromFile = (
-  file,
-  { width = WIDTH, height = HEIGHT } = {}
-) => {
-  const v = createVideo(width, height)
-  v.src = URL.createObjectURL(file)
-  return v
-}
-
-export const destroyVideoEl = v => {
-  URL.revokeObjectURL(v.src)
-  return v
 }
 
 export const resizeCanvas = (el, w = WIDTH, h = HEIGHT) => {
@@ -171,6 +142,7 @@ export const MEDIA_TYPES = {
   instagram: "instagram",
   media: "media",
   file: "file",
+  remove: "remove",
 }
 
 export const MAX_MEDIA_INPUTS = 3

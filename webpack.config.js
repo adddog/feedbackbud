@@ -104,6 +104,7 @@ module.exports = env => {
         resolve(`${constants.JS_SRC_DIR}`, "api"),
         resolve(`${constants.JS_SRC_DIR}`, "webrtc"),
         resolve(`${constants.JS_SRC_DIR}`, "gl"),
+        resolve(`${constants.JS_SRC_DIR}`, "ffmpeg"),
       ],
     },
     node: {

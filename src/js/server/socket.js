@@ -1,4 +1,5 @@
 import { SERVER_URL, IS_DESKTOP } from "common/constants"
+import io from "socket.io-client"
 import objectPool from "usfl/object-pool"
 
 function cb(data) {
@@ -8,21 +9,16 @@ function cb(data) {
 class Socket {
   constructor() {
     this._cbPool = {}
-  }
+    this._socket = io(SERVER_URL)
 
-  set socket(s) {
-    this._socket = s
-
-    this._socket.on("connect", id => {})
-
+    this._socket.on("connect", id => {
+      console.log('connected');
+    })
     this._socket.on("handshake", roomId => {
       this.emitter.emit("set:roomId", roomId)
     })
-
     this._socket.on("event", data => {
-      console.log(data)
     })
-
     this._socket.on("disconnect", () => {})
 
     setInterval(() => {

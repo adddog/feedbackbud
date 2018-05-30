@@ -2,6 +2,7 @@ import { combineReducers } from "redux"
 import { createResponsiveStateReducer } from 'redux-responsive';
 import app from "./app"
 import routes from "./routes"
+import keyboard from "./keyboard"
 import settings from "./settings"
 import webrtc from "./webrtc"
 import gl from "./gl"
@@ -27,6 +28,7 @@ export default combineReducers({
   ),
   routes,
   app,
+  keyboard,
   settings,
   webrtc,
   gl,

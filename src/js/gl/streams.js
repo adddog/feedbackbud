@@ -1,25 +1,31 @@
-import CONFIG from "common/config";
+import CONFIG from 'common/config'
+import { createVideoElFromStream} from "utils"
+
 export default class Streams {
   constructor(options) {
-    this._canvasStreams = new Map();
+    this._canvasStreams = new Map()
   }
 
-  createCanvasStream(
+  createCanvasStreamEl(
     el,
     options = {
       fps: CONFIG.fps,
       width: CONFIG.width,
       height: CONFIG.height,
-    }
+    },
   ) {
-    const stream = el.captureStream(options.fps);
-    this._canvasStreams.set(el, stream);
-    const v = document.createElement("video");
+    const v = createVideoElFromStream(el.captureStream(options.fps))
+    if (this._canvasStreams.has(el)) {
+      return v
+    }
+    this._canvasStreams.set(el, v)
+    return v
+    /*const v = document.createElement("video");
     v.setAttribute("autoplay", "true")
     v.setAttribute("crossorigin", "anonymous")
     v.width = options.width || CONFIG.width;
     v.height = options.height || CONFIG.height;
     v.srcObject = stream;
-    return v;
+    return v;*/
   }
 }

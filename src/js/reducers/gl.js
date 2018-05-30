@@ -4,6 +4,9 @@ import CONFIG from "common/config"
 import { Map } from "immutable";
 
 const initialState = new Map()
+/* ************
+*  config
+************ */
   .set("settings", {
     maxInputs: MAX_MEDIA_INPUTS,
     numChannels: 3,
@@ -16,7 +19,8 @@ const initialState = new Map()
     [MEDIA_TYPES.instagram]: {},
     [MEDIA_TYPES.media]: {},
     [MEDIA_TYPES.file]: {},
-  });
+    [MEDIA_TYPES.remove]: {},
+  })
 
 export default function webrtc(state = initialState, action) {
   switch (action.type) {

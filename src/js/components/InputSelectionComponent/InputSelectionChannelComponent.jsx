@@ -32,7 +32,7 @@ const getElType = (type, props) =>
         )
         if (files.length) {
           Emitter.emit(M_INPUT_NEW, {
-            type: MEDIA_TYPES["file"],
+            type: MEDIA_TYPES.file,
             index: props.index,
             files,
           })

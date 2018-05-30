@@ -6,7 +6,7 @@ export const getWebRTCProps = (state, ownProps = {}) => ({
       to select
   **~~~~**/
   elementIds: {
-    outputCanvas: "c_output",
+    outputCanvas: state.webrtc.get("settings").outputCanvas,
     localVideo: state.webrtc.get("settings").localVideoEl,
     remoteVideo: state.webrtc.get("settings").remoteVideosEl,
   },

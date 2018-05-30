@@ -4,6 +4,10 @@ class CONFIG {
     this._width = WIDTH
     this._height = HEIGHT
     this._fps = FPS_I
+
+    this.videoPlayback = {
+      loop:true
+    }
   }
 
   update(ctx = {}) {

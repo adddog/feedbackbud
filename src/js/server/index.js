@@ -1,11 +1,12 @@
 import "whatwg-fetch"
-import fetchJsonp from "fetch-jsonp"
+import Socket from "./socket"
 import { IS_DEV, WIDTH, SERVER_URL } from "common/constants"
 
 const PATH =
   process.env.NODE_ENV === "development" ? "" : "feedback-rtc/"
 
 const Server = dispatch => {
+
   function upload(blob) {
     var formData = new FormData()
     formData.append("video", blob)

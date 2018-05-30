@@ -10,11 +10,12 @@ import { setInstructions } from "actions/app"
 import { getRoomSlug } from "selectors/webrtc"
 
 const Button = composeElement(["flex"], "button")
+const ContainerEl = extend(Main, ["centerBoth"])
 
 class InputSelectionComponent extends PureComponent {
   render() {
     return (
-      <Main>
+      <ContainerEl>
         {new Array(this.props.glSettings.numChannels)
           .fill(0)
           .map((_, i) => (
@@ -24,7 +25,7 @@ class InputSelectionComponent extends PureComponent {
               inputs={keys(this.props.videoInputs)}
             />
           ))}
-      </Main>
+      </ContainerEl>
     )
   }
 }
