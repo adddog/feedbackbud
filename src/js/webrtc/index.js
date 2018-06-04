@@ -1,5 +1,5 @@
 // import io from "socket.io-client"
-import Emitter from "common/emitter"
+import { AppEmitter as Emitter } from 'common/emitters'
 import { M_INPUT_NEW } from "common/events"
 import { SERVER_URL,MEDIA_TYPES, IS_DEV, IS_PROD } from "common/constants"
 import { connect, disconnect } from "webrtc/model"

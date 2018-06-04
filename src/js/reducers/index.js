@@ -4,6 +4,7 @@ import app from "./app"
 import routes from "./routes"
 import keyboard from "./keyboard"
 import settings from "./settings"
+import socket from "./socket"
 import webrtc from "./webrtc"
 import gl from "./gl"
 
@@ -30,6 +31,7 @@ export default combineReducers({
   app,
   keyboard,
   settings,
+  socket,
   webrtc,
   gl,
 })

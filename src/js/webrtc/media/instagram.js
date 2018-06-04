@@ -1,4 +1,4 @@
-import AppEmitter from "common/emitter"
+import { AppEmitter as Emitter } from 'common/emitters'
 import { videoSettings } from "common/constants"
 import { sample } from "lodash"
 import Server from "server"

@@ -1,4 +1,4 @@
-import {isFunction} from 'lodash'
+import { isFunction } from 'lodash'
 
 class EventEmitter {
   constructor() {
@@ -16,9 +16,7 @@ class EventEmitter {
 
     if (listeners && listeners.length) {
       index = listeners.reduce((i, listener, index) => {
-        return isFunction(listener) && listener === callback
-          ? (i = index)
-          : i
+        return isFunction(listener) && listener === callback ? (i = index) : i
       }, -1)
 
       if (index > -1) {
@@ -41,4 +39,7 @@ class EventEmitter {
     return false
   }
 }
-export default new EventEmitter()
+
+export const SocketEmitter = new EventEmitter()
+export const AppEmitter = new EventEmitter()
+

@@ -12,6 +12,7 @@ import { composeElement, Section, Bb } from "UI/UIComponents"
 import { getRoomIdFromMatchParams } from "selectors/routes"
 import { Main } from "UI/UIComponents"
 import WebRTCComponent from "components/WebRTCComponent/WebRTCComponent"
+import PeersComponent from "components/Interface/PeersComponent"
 
 class FeedComponent extends Component {
   static propTypes = {
@@ -32,6 +33,7 @@ class FeedComponent extends Component {
     return (
       <Main>
         <WebRTCComponent roomId={this.props.roomId} />
+        <PeersComponent />
       </Main>
     )
   }

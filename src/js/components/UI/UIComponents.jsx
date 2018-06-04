@@ -3,14 +3,24 @@ import styled from "styled-components";
 
 const MODS = {
   flex: `
-  position: relative;
-  display: flex;`,
+    display: flex;
+  `,
+
+  fixed: `
+    position: fixed;
+  `,
 
   abs: `
-  position: absolute;
+    position: absolute;
+  `,
+
+  tl: `
+   top:0;
+    left:0;
   `,
 
   "abs--tl": `
+  position: absolute;
   top:0;
   left:0;
   `,
@@ -39,16 +49,27 @@ export const composeElement = (mods, tagName = "div", props = ``) => {
   `;
 };
 
-export const extend = (el, mods = []) => {
+export const extend = (el, mods = [], props = ``) => {
   return el.extend`
     ${(isArray(mods) ? mods : [mods])
       .map(str => MODS[str] || "")
       .join("")};
+       ${props}
   `;
 };
 
 export const Span = styled.span`
   position: relative;
+`;
+
+export const Div = styled.div`
+  position: relative;
+`;
+
+export const Input = styled.input`
+`;
+
+export const Button = styled.button`
 `;
 
 export const Main = styled.section`

@@ -3,7 +3,7 @@ import {
   HEIGHT,
   createVideoElFromStream,
 } from "common/constants"
-import AppEmitter from "common/emitter"
+import { AppEmitter as Emitter } from 'common/emitters'
 const ObserveViewer = () => {
   let _window
   const w = WIDTH / 2

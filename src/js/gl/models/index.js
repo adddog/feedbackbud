@@ -1,6 +1,6 @@
-import Emitter from 'common/emitter'
-import { override} from 'core-decorators'
-import { qs, createVideoElFromFile,destroyVideoEl } from 'utils'
+import { AppEmitter } from 'common/emitters'
+import { override } from 'core-decorators'
+import { qs, createVideoElFromFile, destroyVideoEl } from 'utils'
 import { MEDIA_TYPES, LOCAL_VIDEO_ID, CANVAS_OUTPUT_ID } from 'common/constants'
 import { M_INPUT_NEW } from 'common/events'
 import observable from 'proxy-observable'
@@ -9,7 +9,7 @@ import Keyboard from './keyboard'
 import Streams from 'gl/streams'
 import Picker from 'utils/picker'
 
-class MODEL extends BaseModel{
+class MODEL extends BaseModel {
   constructor(props) {
     super(props)
     this.store = observable({
@@ -22,7 +22,7 @@ class MODEL extends BaseModel{
 
     this.streams = new Streams()
 
-    Emitter.on(M_INPUT_NEW, obj => {
+    AppEmitter.on(M_INPUT_NEW, obj => {
       const { type, index, files } = obj
       switch (type) {
         case MEDIA_TYPES.webcam: {
@@ -70,13 +70,13 @@ class MODEL extends BaseModel{
 
   removeSourceElAt(index) {
     const inputs = this.store.inputs
-    var sourceEl = inputs.splice(index,1)
+    var sourceEl = inputs.splice(index, 1)
     destroyVideoEl(sourceEl[0])
     this.store.inputs = inputs
   }
 
   @override
-  setDispatchHandlers(dispatchHandlers){
+  setDispatchHandlers(dispatchHandlers) {
     super.setDispatchHandlers(dispatchHandlers)
     Keyboard.setDispatchHandlers(dispatchHandlers)
   }
@@ -85,4 +85,4 @@ class MODEL extends BaseModel{
     return Keyboard.store.textureIndexs[i]
   }
 }
-export default  new MODEL()
+export default new MODEL()

@@ -5,14 +5,18 @@ import { compose, setDisplayName, onlyUpdateForPropTypes, withHandlers } from 'r
 import { qs, fillScreen } from 'utils'
 import { keyboardUpdate } from 'actions/keyboard'
 import styled from 'styled-components'
-import { composeElement } from 'UI/UIComponents'
-import { Main } from 'UI/UIComponents'
+import { composeElement,extend,Main } from 'UI/UIComponents'
 import { getWebRTCProps, getDimentions } from 'selectors/webrtc'
 import WebRTC from 'webrtc'
 import GL from 'gl'
 import InputSelectionComponent from 'components/InputSelectionComponent/InputSelectionComponent'
 
 export const CanvasContainer = composeElement(['abs', 'abs--tl', 'full'], 'div')
+const MainEl = extend(Main, ['full'], `
+  position: absolute;
+  top:0;
+  left:0;
+  `)
 
 export const Canvas = styled.canvas`
     backface-visibility: hidden
@@ -54,7 +58,7 @@ class WebRTCComponent extends Component {
 
   render() {
     return (
-      <Main>
+      <MainEl>
         <VideoEl
           width={this.props.dimensions.width}
           height={this.props.dimensions.height}
@@ -72,7 +76,7 @@ class WebRTCComponent extends Component {
           />
         </CanvasContainer>
         <InputSelectionComponent glSettings={this.props.glSettings} videoInputs={this.props.videoInputs} />
-      </Main>
+      </MainEl>
     )
   }
 }
