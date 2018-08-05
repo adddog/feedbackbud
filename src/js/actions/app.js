@@ -1,10 +1,8 @@
-import {
-  APP_INSTRUCTIONS_SET,
-} from 'actions/actionTypes';
+import * as ACTIONS from 'actions/actionTypes'
 
 export function setInstructions(payload = {}) {
   return {
-    type: APP_INSTRUCTIONS_SET,
+    type: ACTIONS.APP_INSTRUCTIONS_SET,
     payload
   };
 }

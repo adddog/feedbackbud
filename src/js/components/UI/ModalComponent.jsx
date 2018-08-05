@@ -2,10 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { composeElement, Div, extend } from 'UI/UIComponents'
-const ContainerEl = extend(
+import { MARGINS, COLORS } from 'styles/variables'
+const ContainerEl = extend(Div, ['fixed', 'full', 'tl', 'flex', 'centerBoth'])
+
+const ContentEl = extend(
   Div,
-  ['fixed','full', 'tl', 'flex', 'centerBoth'],
+  ['flex', 'centerBoth'],
+  `
+  padding: ${MARGINS.large}
+  background-color: ${COLORS['gray-lightest']}
+  `,
 )
-const PeerDialogComponent = props => <ContainerEl>{props.children}</ContainerEl>
+const PeerDialogComponent = props => (
+  <ContainerEl>
+    <ContentEl>{props.children}</ContentEl>
+  </ContainerEl>
+)
 
 export default PeerDialogComponent

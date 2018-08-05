@@ -1,8 +1,15 @@
 import 'whatwg-fetch'
 import Socket from './socket'
 
-export default class Server {
-  constructor(dispatch) {
-    this.socket = new Socket(dispatch)
+class Server {
+  setStore(store) {
+    this.socket = new Socket(store)
+    this.Socket = this.socket
+  }
+
+  get io() {
+    return this.socket.io
   }
 }
+
+export default new Server()

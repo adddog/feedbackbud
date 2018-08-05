@@ -9,29 +9,65 @@ const initialState = fromJS({
       status: null,
     },
   },
+  messages: new List(),
   userIds: [],
 })
+
 export default function socket(state = initialState, action) {
   switch (action.type) {
+    /*************
+     *  set you
+     ************ */
     case ACTIONS.SOCKET_SET_USER: {
       return setIn(state, ['user', 'id'], action.payload.id)
-      return state.set('user', state.get('user').set('id', action.payload.id))
     }
+
+    /*************
+     *  only allow new ids and not you
+     ************ */
     case ACTIONS.SOCKET_SET_USERS_IDS: {
-      return state.set('userIds', new List(action.payload))
+      return state.set(
+        'userIds',
+        state
+          .get('userIds')
+          .concat(
+            new List(action.payload).filter(
+              id =>
+                state.get('userIds').indexOf(id) < 0 &&
+                id !== state.getIn(['user', 'id']),
+            ),
+          ),
+      )
     }
+
+    case ACTIONS.SOCKET_REMOVE_USERS_IDS: {
+      return state.set(
+        'userIds',
+        state.get('userIds').filter(id => action.payload.indexOf(id) < 0),
+      )
+    }
+
+    case ACTIONS.SOCKET_REQ_PARTNER_CONFIRM:
     case ACTIONS.SOCKET_REQ_PARTNER: {
-      const { id, status } = action.payload
-      console.log(action.payload);
       return setIn(
         state,
         ['user', 'partner'],
         state.getIn(['user', 'partner']).merge(new Map(action.payload)),
       )
-      return state
-        .get('user')
-        .get('partner')
-        .merge(new Map(action.payload))
+    }
+    case ACTIONS.SOCKET_MSG_RECEIVE: {
+      return state.set('messages', state.get('messages').push(action.payload))
+    }
+    case ACTIONS.SOCKET_MSG_SEND_NO_REPLY: {
+      return state.set(
+        'messages',
+        state.get('messages').set(
+          state.get('messages').findIndex(item => {
+            return item.fromId === action.payload.id
+          }),
+          action.payload,
+        ),
+      )
     }
     default: {
       return state

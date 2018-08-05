@@ -10,7 +10,7 @@ import { Map } from "immutable"
 
 const initialState = new Map()
   .set("settings", {
-    serverUrl: SERVER_URL,
+    url: SERVER_URL,
     outputCanvas: CANVAS_OUTPUT_ID,
     localVideoEl: LOCAL_VIDEO_ID,
     remoteVideosEl: REMOTE_VIDEOS_EL_ID,

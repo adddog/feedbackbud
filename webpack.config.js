@@ -92,7 +92,7 @@ module.exports = env => {
         resolve(`${constants.JS_SRC_DIR}`, "components"),
         resolve(`${constants.JS_SRC_DIR}`, "containers"),
         resolve(`${constants.JS_SRC_DIR}`, "modules"),
-        resolve(`${constants.JS_SRC_DIR}`, "mediators"),
+        resolve(`${constants.JS_SRC_DIR}`, "middleware"),
         resolve(`${constants.JS_SRC_DIR}`, "reducers"),
         resolve(`${constants.JS_SRC_DIR}`, "routes"),
         resolve(`${constants.JS_SRC_DIR}`, "store"),

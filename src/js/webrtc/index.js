@@ -1,37 +1,36 @@
-// import io from "socket.io-client"
+import SimpleWebRTC from 'simplewebrtc'
 import { AppEmitter as Emitter } from 'common/emitters'
-import { M_INPUT_NEW } from "common/events"
-import { SERVER_URL,MEDIA_TYPES, IS_DEV, IS_PROD } from "common/constants"
-import { connect, disconnect } from "webrtc/model"
-import Socket from "server/socket"
-import Desktop from "webrtc/desktop"
-import Mobile from "webrtc/mobile"
+import { M_INPUT_NEW } from 'common/events'
+import { SERVER_URL, MEDIA_TYPES, IS_DEV, IS_PROD } from 'common/constants'
+import { connect, disconnect } from 'webrtc/model'
+import Server from 'server'
+import Desktop from 'webrtc/desktop'
+import Mobile from 'webrtc/mobile'
 
 export default class WebRTC {
   constructor(props) {
     this.props = props
-    if (IS_DEV) {
-      // Socket.socket = io(SERVER_URL)
-    }
-    Socket.emitter = Emitter
     Emitter.on(M_INPUT_NEW, obj => {
-      const {type, files} = obj
-      if(type === MEDIA_TYPES.webcam && !this.webrtc){
+      const { type, files } = obj
+      if (type === MEDIA_TYPES.webcam && !this.webrtc) {
         this.initWebRTC()
       }
     })
   }
 
-  initWebRTC(){
+  initWebRTC() {
     const { settings, roomId } = this.props
     const videoSettings = {
       width: { max: settings.width },
       height: { max: settings.height },
       frameRate: { max: settings.fps },
     }
+
+    console.log(settings)
+
     this.webrtc = new SimpleWebRTC(
       {
-        url: settings.serverUrl,
+        // url: settings.url,
         nick: {
           uuid: settings.uuid,
         },
@@ -41,10 +40,10 @@ export default class WebRTC {
           audio: !settings.noAudio,
         },
       },
-      { mirror: false }
+      { mirror: false },
     )
 
-    this.webrtc.on("connectionReady", evt => {
+    this.webrtc.on('connectionReady', evt => {
       if (IS_PROD) {
         Socket.socket = webrtc.connection.connection
       }
@@ -52,8 +51,8 @@ export default class WebRTC {
 
     //this.webrtc.on("disconnect", evt => {})
 
-    this.webrtc.on("readyToCall", () => {
-      Socket.createRoom({ roomId })
+    this.webrtc.on('readyToCall', () => {
+      Server.socket.room.createRoom({ roomId })
       this.webrtc.joinRoom(roomId)
       this.start()
     })
@@ -81,6 +80,6 @@ export default class WebRTC {
     this.app = Detector.isMobile
       ? new Mobile(this.webrtc, this.props, Emitter)
       : new Desktop(this.webrtc, this.props, Emitter)
-    connect()
+    // connect()
   }
 }

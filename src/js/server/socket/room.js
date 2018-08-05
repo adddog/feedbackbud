@@ -1,9 +1,10 @@
 import Base from './base'
 
 export default class Room extends Base{
-  constructor(socket, dispatch) {
-    super(socket, dispatch)
+  constructor(socket, store) {
+    super(socket, store)
   }
+
   createRoom({ roomId }) {
     if (!roomId) return
     this.emit('room:create', {

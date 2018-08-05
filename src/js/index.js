@@ -1,6 +1,7 @@
 import "@babel/polyfill"
-window.Modernizr = window.Modernizr || {}
+import "webrtc-adapter"
 import "whatwg-fetch"
+window.Modernizr = window.Modernizr || {}
 import baseStyles from 'styles'
 
 import { REQUEST_PREMIERE_CHILDREN } from "actions/actionTypes"
@@ -29,14 +30,7 @@ const browserHistory = createBrowserHistory()
 const store = configureStore({
   browserHistory,
 })
-
-const throttleResize = throttle(() => {
-  store.dispatch(calculateResponsiveState(window))
-}, 400)
-
-window.addEventListener("resize", () => throttleResize())
-
-const server = new Server(store.dispatch)
+Server.setStore(store)
 
 const render = () => {
   baseStyles()
@@ -53,5 +47,10 @@ ReactDOM.render(
   render(),
   document.getElementById("app")
 )
+
+const throttleResize = throttle(() => {
+  store.dispatch(calculateResponsiveState(window))
+}, 400)
+window.addEventListener("resize", () => throttleResize())
 
 logGreen(`process.env.DEV ${process.env.DEV}`)

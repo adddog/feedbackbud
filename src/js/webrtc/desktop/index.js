@@ -33,6 +33,7 @@ const Desktop = (webrtc, state, emitter) => {
   })
 
   webrtc.on("videoAdded", function(video, peer) {
+    console.log(peer);
     video.setAttribute("crossorigin", "anonymous")
     video.style.display = "none"
   })

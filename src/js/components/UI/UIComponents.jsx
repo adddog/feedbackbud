@@ -62,6 +62,10 @@ export const Span = styled.span`
   position: relative;
 `;
 
+export const Text = styled.p`
+  position: relative;
+`;
+
 export const Div = styled.div`
   position: relative;
 `;
@@ -82,6 +86,11 @@ export const Main = styled.section`
 export const Container = styled.section`
   position: relative;
   display: flex;
+`;
+export const ContainerStack = styled.section`
+  position: relative;
+  display: flex;
+  flex-direction:column;
 `;
 
 export const Section = styled.section`

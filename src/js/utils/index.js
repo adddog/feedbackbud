@@ -1,4 +1,5 @@
 import { WIDTH, HEIGHT, FPS_I } from 'common/constants'
+import { isBoolean, isNil } from 'lodash';
 import CONFIG from 'common/config'
 import { cover, contain } from 'intrinsic-scale'
 
@@ -54,3 +55,8 @@ export const destroyVideoEl = v => {
   v.remove()
   v = null
 }
+
+export const isEnvTrue = key => {
+  return isBoolean(Boolean(process.env[key])) ? process.env[key] == 'true' : !isNil(process.env[key]);
+};
+

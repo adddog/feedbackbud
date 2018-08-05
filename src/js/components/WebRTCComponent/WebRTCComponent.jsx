@@ -1,22 +1,35 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { compose, setDisplayName, onlyUpdateForPropTypes, withHandlers } from 'recompose'
+import {
+  compose,
+  setDisplayName,
+  onlyUpdateForPropTypes,
+  withHandlers,
+} from 'recompose'
 import { qs, fillScreen } from 'utils'
 import { keyboardUpdate } from 'actions/keyboard'
 import styled from 'styled-components'
-import { composeElement,extend,Main } from 'UI/UIComponents'
+import { composeElement, extend, Main } from 'UI/UIComponents'
 import { getWebRTCProps, getDimentions } from 'selectors/webrtc'
 import WebRTC from 'webrtc'
 import GL from 'gl'
 import InputSelectionComponent from 'components/InputSelectionComponent/InputSelectionComponent'
 
+/*************
+ *  ELS
+ ************ */
 export const CanvasContainer = composeElement(['abs', 'abs--tl', 'full'], 'div')
-const MainEl = extend(Main, ['full'], `
+
+const MainEl = extend(
+  Main,
+  ['full'],
+  `
   position: absolute;
   top:0;
   left:0;
-  `)
+  `,
+)
 
 export const Canvas = styled.canvas`
     backface-visibility: hidden
@@ -25,8 +38,14 @@ export const Canvas = styled.canvas`
     transform: scale3d(1,1,1)
 `
 
-export const VideoEl = composeElement(['abs', 'abs--tl'], 'video', `display:none;`)
+export const VideoEl = composeElement(
+  ['abs', 'abs--tl'],
+  'video',
+)
 
+/*************
+ *  REACT
+ ************ */
 class WebRTCComponent extends Component {
   static propTypes = {
     roomId: PropTypes.string.isRequired,
@@ -43,8 +62,12 @@ class WebRTCComponent extends Component {
 
   componentDidMount() {
     this.webrtc = new WebRTC(this.props.webRTCProps)
-    this.gl = GL(this.canvasEl, this.props.webRTCProps.settings,
-      this.props.dispatchHandlers)
+
+    this.gl = GL(
+      this.canvasEl,
+      this.props.webRTCProps.settings,
+      this.props.dispatchHandlers,
+    )
     /*this.gl.model.addSourceEl(
       qs(`#${this.props.webRTCProps.elementIds.localVideo}`),
     );*/
@@ -75,12 +98,18 @@ class WebRTCComponent extends Component {
             id={this.props.webRTCProps.elementIds.outputCanvas}
           />
         </CanvasContainer>
-        <InputSelectionComponent glSettings={this.props.glSettings} videoInputs={this.props.videoInputs} />
+        <InputSelectionComponent
+          glSettings={this.props.glSettings}
+          videoInputs={this.props.videoInputs}
+        />
       </MainEl>
     )
   }
 }
 
+/*************
+ *  CONNECT
+ ************ */
 const mapStateToProps = () => (state, ownProps) => ({
   isStarted: state.app.get('instructions').started,
   dimensions: getDimentions(state),

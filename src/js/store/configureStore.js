@@ -1,36 +1,40 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import Reducers from 'reducers';
-import rootSaga from 'sagas';
-import createSagaMiddleware from 'redux-saga';
-import { createLogger } from 'redux-logger';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { applyMiddleware, compose, createStore } from 'redux'
+import Reducers from 'reducers'
+import rootSaga from 'sagas'
+import Server from "server"
+import {isEnvTrue} from 'utils'
+import socketMiddleware from 'middleware/socket'
+import createSagaMiddleware from 'redux-saga'
+import { createLogger } from 'redux-logger'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 export default function configureStore(options = {}) {
-  const { initialState = {}, browserHistory = {} } = options;
+  const { initialState = {}, browserHistory = {}, server } = options
 
-  const middlewares = [];
+  const middlewares = []
 
   const sagaMiddleware = createSagaMiddleware({
-    logger: () => {}
-  });
+    logger: () => {},
+  })
 
   middlewares.push(
     routerMiddleware(browserHistory),
-    sagaMiddleware
-  );
+    sagaMiddleware,
+    socketMiddleware(Server),
+  )
 
-  if (process.env.DEV) {
-    middlewares.push(createLogger());
+  if (isEnvTrue('LOGGER')) {
+    middlewares.push(createLogger())
   }
 
   const store = createStore(
     connectRouter(browserHistory)(Reducers),
     initialState,
-    composeWithDevTools(applyMiddleware(...middlewares))
-  );
+    composeWithDevTools(applyMiddleware(...middlewares)),
+  )
 
-  sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga)
 
-  return store;
+  return store
 }
