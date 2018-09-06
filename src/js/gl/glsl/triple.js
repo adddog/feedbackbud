@@ -1,5 +1,5 @@
 const VERTEX_BUFFER = [0, 0, 0, 1, 1, 0, 1, 1];
-import { hangedMan, temperance, stroke } from "spirit-deck";
+// import { hangedMan, temperance, stroke } from "spirit-deck";
 import * as Posterize from "./posterize.glsl";
 
 const Double = (regl, props) => {

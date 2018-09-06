@@ -1,13 +1,13 @@
-const { join, resolve } = require("path")
+const { join, resolve } = require('path')
 
-const constants = require("./webpack.constants")
-const colors = require("colors")
-const _ = require("lodash")
+const constants = require('./webpack.constants')
+const colors = require('colors')
+const _ = require('lodash')
 
-const webpack = require("webpack")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const UglifyJsWebpackPlugin = require("uglifyjs-webpack-plugin")
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = env => {
   const isDev = !!env.dev
@@ -16,15 +16,15 @@ module.exports = env => {
   const isTest = !!env.test
 
   const DefineENV = new webpack.DefinePlugin(
-    Object.assign({}, require("dotenv").config(), {
-      "process.env.DEV": isDev,
-    })
+    Object.assign({}, require('dotenv').config(), {
+      'process.env.DEV': isDev,
+    }),
   )
 
-  console.log("--------------")
+  console.log('--------------')
   console.log(colors.blue(`isDev: ${isDev}`))
   console.log(colors.blue(`isProd: ${isProd}`))
-  console.log("--------------")
+  console.log('--------------')
 
   const addPlugin = (add, plugin) => (add ? plugin : undefined)
   const ifDev = plugin => addPlugin(env.dev, plugin)
@@ -34,17 +34,17 @@ module.exports = env => {
 
   return {
     entry: {
-      app: "./js/index.js",
+      app: ['@babel/polyfill', './js/index.js'],
     },
     node: {
-      dns: "mock",
-      net: "mock",
+      dns: 'mock',
+      net: 'mock',
     },
-    mode: isDev ? "development" : "production",
+    mode: isDev ? 'development' : 'production',
     output: {
-      filename: "bundle.[name].[hash].js",
+      filename: 'bundle.[name].[hash].js',
       path: resolve(__dirname, constants.DIST),
-      publicPath: "/",
+      publicPath: '/',
       pathinfo: !env.prod,
     },
     optimization: {
@@ -57,14 +57,14 @@ module.exports = env => {
       splitChunks: {
         cacheGroups: {
           default: {
-            chunks: "initial",
-            name: "bundle",
+            chunks: 'initial',
+            name: 'bundle',
             priority: -20,
             reuseExistingChunk: true,
           },
           vendor: {
-            chunks: "initial",
-            name: "vendor",
+            chunks: 'initial',
+            name: 'vendor',
             priority: -10,
             test: /node_modules\/(.*)\.js/,
           },
@@ -72,9 +72,9 @@ module.exports = env => {
       },
     },
     context: constants.SRC_DIR,
-    devtool: env.prod ? "source-map" : "eval",
+    devtool: env.prod ? 'source-map' : 'eval',
     devServer: {
-      host: "0.0.0.0",
+      host: '0.0.0.0',
       stats: {
         colors: true,
       },
@@ -84,32 +84,32 @@ module.exports = env => {
     },
     bail: env.prod,
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: ['.js', '.jsx'],
       modules: [
         constants.NODE_MODULES_DIR,
         resolve(`${constants.JS_SRC_DIR}`),
-        resolve(`${constants.JS_SRC_DIR}`, "actions"),
-        resolve(`${constants.JS_SRC_DIR}`, "components"),
-        resolve(`${constants.JS_SRC_DIR}`, "containers"),
-        resolve(`${constants.JS_SRC_DIR}`, "modules"),
-        resolve(`${constants.JS_SRC_DIR}`, "middleware"),
-        resolve(`${constants.JS_SRC_DIR}`, "reducers"),
-        resolve(`${constants.JS_SRC_DIR}`, "routes"),
-        resolve(`${constants.JS_SRC_DIR}`, "store"),
-        resolve(`${constants.JS_SRC_DIR}`, "selectors"),
-        resolve(`${constants.JS_SRC_DIR}`, "server"),
-        resolve(`${constants.JS_SRC_DIR}`, "sagas"),
-        resolve(`${constants.JS_SRC_DIR}`, "styles"),
-        resolve(`${constants.JS_SRC_DIR}`, "utils"),
-        resolve(`${constants.JS_SRC_DIR}`, "api"),
-        resolve(`${constants.JS_SRC_DIR}`, "webrtc"),
-        resolve(`${constants.JS_SRC_DIR}`, "gl"),
-        resolve(`${constants.JS_SRC_DIR}`, "ffmpeg"),
+        resolve(`${constants.JS_SRC_DIR}`, 'actions'),
+        resolve(`${constants.JS_SRC_DIR}`, 'components'),
+        resolve(`${constants.JS_SRC_DIR}`, 'containers'),
+        resolve(`${constants.JS_SRC_DIR}`, 'modules'),
+        resolve(`${constants.JS_SRC_DIR}`, 'middleware'),
+        resolve(`${constants.JS_SRC_DIR}`, 'reducers'),
+        resolve(`${constants.JS_SRC_DIR}`, 'routes'),
+        resolve(`${constants.JS_SRC_DIR}`, 'store'),
+        resolve(`${constants.JS_SRC_DIR}`, 'selectors'),
+        resolve(`${constants.JS_SRC_DIR}`, 'server'),
+        resolve(`${constants.JS_SRC_DIR}`, 'sagas'),
+        resolve(`${constants.JS_SRC_DIR}`, 'styles'),
+        resolve(`${constants.JS_SRC_DIR}`, 'utils'),
+        resolve(`${constants.JS_SRC_DIR}`, 'api'),
+        resolve(`${constants.JS_SRC_DIR}`, 'webrtc'),
+        resolve(`${constants.JS_SRC_DIR}`, 'gl'),
+        resolve(`${constants.JS_SRC_DIR}`, 'ffmpeg'),
       ],
     },
     node: {
-      fs: "empty",
-      child_process: "empty",
+      fs: 'empty',
+      child_process: 'empty',
     },
     module: {
       rules: [
@@ -117,7 +117,7 @@ module.exports = env => {
           test: /\.(js|jsx)$/,
           exclude: /(node_modules|bower_components)/,
           use: {
-            loader: "babel-loader",
+            loader: 'babel-loader',
           },
         },
       ],
@@ -127,21 +127,21 @@ module.exports = env => {
       new HtmlWebpackPlugin({
         assetsUrl: `""`,
         env: process.env,
-        template: "./index.ejs", // Load a custom template (ejs by default see the FAQ for details)
+        template: './index.ejs', // Load a custom template (ejs by default see the FAQ for details)
       }),
       ifProd(
         new ExtractTextPlugin({
-          filename: "css/main.css",
+          filename: 'css/main.css',
           disable: false,
           allChunks: true,
-        })
+        }),
       ),
       ifProd(
         new webpack.LoaderOptionsPlugin({
           minimize: true,
           debug: false,
           quiet: true,
-        })
+        }),
       ),
       DefineENV,
     ]),

@@ -302,4 +302,4 @@ class PICKER {
   }
 }
 
-module.exports = new PICKER()
+export default new PICKER()

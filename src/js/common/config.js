@@ -1,4 +1,5 @@
 import { WIDTH, HEIGHT, FPS_I } from "common/constants"
+
 class CONFIG {
   constructor() {
     this._width = WIDTH
@@ -43,4 +44,4 @@ class CONFIG {
   }
 }
 
-module.exports = new CONFIG()
+export default new CONFIG()

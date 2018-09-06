@@ -1,4 +1,3 @@
-import "@babel/polyfill"
 import "webrtc-adapter"
 import "whatwg-fetch"
 window.Modernizr = window.Modernizr || {}
